@@ -7,6 +7,7 @@ import com.acc.quiz.model.Quiz;
 import com.acc.quiz.repository.QuizRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,8 +17,15 @@ public class ServiceImpl implements QuizService{
     private QuizRepo quizDao;
 
     @Override
-    public Quiz creatQuestion(Quiz quiz){
-        return quizDao.save(quiz);
+    public ResponseEntity<String> creatQuestion(Quiz quiz){
+
+        Optional<Quiz> entity = quizDao.findByQuestion(quiz.getQuestion());
+        if (entity.isPresent()) {
+            return ResponseEntity.badRequest().body("Dublicate Data");
+        }else{
+            quizDao.save(quiz);
+        return  ResponseEntity.ok("Created Succssesfully");
+        }
     }
 
     @Override

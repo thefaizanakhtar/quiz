@@ -4,9 +4,11 @@ import java.util.List;
 
 import com.acc.quiz.model.Quiz;
 
+import org.springframework.http.ResponseEntity;
+
 public interface QuizService {
 
-    public Quiz creatQuestion(Quiz quiz);
+    public ResponseEntity<String> creatQuestion(Quiz quiz);
 
     public List<Quiz> getAllQuiz();
 
